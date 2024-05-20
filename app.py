@@ -12,10 +12,14 @@ from PyQt6.QtWidgets import (
     QHBoxLayout,
     QFrame,
 )
-from qt_material import apply_stylesheet
 
 DURATION_INT = 60
-DEFAULT_TEXT = "Example text for test your typing skills"
+DEFAULT_TEXT = (
+    "The quick brown fox jumps over the lazy dog. Jackdaws love my big sphinx of quartz. Mr. Jock, "
+    "TV quiz PhD, bags few lynx. Sphinx of black quartz, judge my vow. How razorback-jumping frogs can "
+    "level six piqued gymnasts. Crazy Fredericka bought many very exquisite opal jewels. Sixty zippers "
+    "were quickly picked from the woven jute bag. Woven silk pyjamas exchanged for blue quartz."
+)
 RESET_TIME = "01:00"
 
 
@@ -29,6 +33,7 @@ class ClientViewWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Typing Speed Test Application")
+        self.setFixedSize(800, 600)
         self.setCentralWidget(AppLayoutWidget())
 
 
@@ -37,7 +42,8 @@ class AppWidget(QWidget):
         super().__init__()
         self.title = None
         self.sample_text = None
-        self.timer_label = None
+        self.time_label = None
+        self.countdown_label = None
         self.reset_btn = None
         self.entry_text = None
         self.wpm_label = None
@@ -55,18 +61,19 @@ class AppWidget(QWidget):
         self.correct_keystrokes = 0
 
     def init_ui(self):
-        self.title = QLabel("Test your typing skills")
+        self.title = QLabel("Test your typing skills.")
 
         self.sample_text = QTextEdit(DEFAULT_TEXT)
         self.sample_text.setReadOnly(True)
 
-        self.timer_label = QLabel(RESET_TIME)
+        self.time_label = QLabel("Time Left: ")
+        self.countdown_label = QLabel(RESET_TIME)
 
         self.reset_btn = QPushButton("Reset")
         self.reset_btn.setIcon(QIcon("./image/refresh.png"))
         self.reset_btn.clicked.connect(self.reset)
 
-        self.entry_text = QLineEdit()
+        self.entry_text = QLineEdit(self)
         self.entry_text.setPlaceholderText("Start typing here...")
         self.entry_text.textChanged.connect(self.start_typing)
 
@@ -101,7 +108,7 @@ class AppWidget(QWidget):
         for i, word in enumerate(self.words):
             if i == self.current_word_index:
                 highlighted_text += (
-                    f"<span style='background-color: black;'>{word}</span> "
+                    f"<span style='background-color: #cc00cc;'>{word}</span> "
                 )
             else:
                 highlighted_text += f"{word} "
@@ -116,10 +123,11 @@ class AppWidget(QWidget):
     def stop_timer(self):
         self.timer.stop()
         self.timer_running = False
+        self.entry_text.setEnabled(False)
 
     def update_timer(self):
         if self.timer_running and self.time_left is not None:
-            self.timer_label.setText(secs_to_minsec(self.time_left))
+            self.countdown_label.setText(secs_to_minsec(self.time_left))
             if self.time_left > 0:
                 self.time_left -= 1
             else:
@@ -131,11 +139,12 @@ class AppWidget(QWidget):
         self.current_word_index = 0
         self.highlight_current_word()
         self.entry_text.clear()
-        self.timer_label.setText(RESET_TIME)
+        self.countdown_label.setText(RESET_TIME)
         self.wpm_label.setText("WPM: 0")
         self.accuracy_label.setText("Accuracy: 0%")
         self.total_keystrokes = 0
         self.correct_keystrokes = 0
+        self.entry_text.setEnabled(True)
 
     def update_result(self):
         time_spent = (
@@ -189,7 +198,8 @@ class AppLayoutWidget(QWidget):
         self.ctrl_layout.addWidget(self.app_widget.accuracy_label)
 
         self.entry_layout.addWidget(self.app_widget.entry_text)
-        self.entry_layout.addWidget(self.app_widget.timer_label)
+        self.entry_layout.addWidget(self.app_widget.time_label)
+        self.entry_layout.addWidget(self.app_widget.countdown_label)
 
         self.main_layout.addWidget(self.app_widget.title, Qt.AlignmentFlag.AlignTop)
         self.main_layout.addWidget(self.sample_frame, Qt.AlignmentFlag.AlignCenter)
@@ -199,7 +209,8 @@ class AppLayoutWidget(QWidget):
 def main():
     app = QApplication([])
     window = ClientViewWindow()
-    apply_stylesheet(app, theme="dark_cyan.xml")
+    with open("style.css", "r") as file:
+        window.setStyleSheet(file.read())
     window.show()
     app.exec()
 
