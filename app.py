@@ -1,17 +1,8 @@
 from PyQt6.QtCore import Qt, QTimer
 from PyQt6.QtGui import QIcon
-from PyQt6.QtWidgets import (
-    QApplication,
-    QMainWindow,
-    QWidget,
-    QLabel,
-    QPushButton,
-    QTextEdit,
-    QLineEdit,
-    QVBoxLayout,
-    QHBoxLayout,
-    QFrame,
-)
+from PyQt6.QtWidgets import (QFrame, QHBoxLayout, QLabel, QLineEdit,
+                             QMainWindow, QPushButton, QTextEdit, QVBoxLayout,
+                             QWidget)
 
 DURATION_INT = 60
 DEFAULT_TEXT = (
