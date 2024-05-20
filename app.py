@@ -204,16 +204,3 @@ class AppLayoutWidget(QWidget):
         self.main_layout.addWidget(self.app_widget.title, Qt.AlignmentFlag.AlignTop)
         self.main_layout.addWidget(self.sample_frame, Qt.AlignmentFlag.AlignCenter)
         self.main_layout.addWidget(self.entry_frame, Qt.AlignmentFlag.AlignBottom)
-
-
-def main():
-    app = QApplication([])
-    window = ClientViewWindow()
-    with open("style.css", "r") as file:
-        window.setStyleSheet(file.read())
-    window.show()
-    app.exec()
-
-
-if __name__ == "__main__":
-    main()
