@@ -37,11 +37,11 @@ limit.
     ```bash
    python main.py
     ```
- 
+
 ## Screenshots
 
-![Screenshot 1](/screenshots/screenshot 1.png)
-![Screenshot 2](/screenshots/screenshot 2.png)
-![Screenshot 3](/screenshots/screenshot 3.png)
+<img alt="Screenshot 1" src="/screenshots/screenshot 1.png"/>
+<img alt="Screenshot 2" src="/screenshots/screenshot 2.png"/>
+<img alt="Screenshot 3" src="/screenshots/screenshot 3.png"/>
 
 
