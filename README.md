@@ -40,8 +40,8 @@ limit.
 
 ## Screenshots
 
-<img alt="Screenshot 1" src="/screenshots/screenshot 1.png"/>
-<img alt="Screenshot 2" src="/screenshots/screenshot 2.png"/>
-<img alt="Screenshot 3" src="/screenshots/screenshot 3.png"/>
+<img alt="Screenshot 1" src="/screenshots/typing_speed_test_1.png"/>
+<img alt="Screenshot 2" src="/screenshots/typing_speed_test_2.png"/>
+<img alt="Screenshot 3" src="/screenshots/typing_speed_test_3.png"/>
 
 
